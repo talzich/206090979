@@ -96,7 +96,7 @@ public class Graph_Ex0_Test2 {
         _rnd = new Random(seed);
         for(int i=0;i<v_size;i++) {
             node_data n = new Node();
-            g.addNode(n);//change
+            g.addNode(n);
         }
         // Iterator<node_data> itr = V.iterator(); // Iterator is a more elegant and generic way, but KIS is more important
         int[] nodes = nodes(g);
