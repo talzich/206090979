@@ -25,6 +25,7 @@ public class Node implements node_data {
     public Node(){
         key = serialNumber++;
         nei = new HashMap<>();
+        nei.put(this.getKey(), this);
     }
 
     public Node(node_data node_data) {
@@ -56,7 +57,7 @@ public class Node implements node_data {
      * @return True iff a node with a key ,identical to the given parameter, is adjacent to this node.
      */
     public boolean hasNi(int key) {
-        if(key >= nei.size()) return false;
+        if(key > nei.size()) return false;
         if (this.getKey() == key) return true;
         return (nei.get(key) != null);
     }
@@ -66,8 +67,8 @@ public class Node implements node_data {
      * @param t
      */
     public void addNi(node_data t) {
-        if (this.equals(t)) return;
-        nei.put(t.getKey(), t);
+        if (this == t) return;
+        this.nei.put(t.getKey(), t);
     }
 
     /**
