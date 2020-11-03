@@ -3,6 +3,7 @@ package ex0;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Graph_DS implements graph{
 
@@ -15,71 +16,107 @@ public class Graph_DS implements graph{
     public Graph_DS(){
         nodes = new HashMap<>();
         modeCounter++;
-    }
+    }//v
 
+    /**
+     *
+     * @param key - the node_id
+     * @return The node with the specified key, if exists in this graph.
+     */
     @Override
     public node_data getNode(int key) {
-        System.out.println("*****getNode  - Start*****");
-        System.out.println("*****getNode  - End*****");
+        if(key > nodes.size()) return null;
         return nodes.get(key);
-
     }//v
 
-//    @Override
+    /**
+     *
+     * @param node1
+     * @param node2
+     * @return True iff the nodes with the specified keys are connected in this graph.
+     * @return False if one of those nodes does not exist in this graph
+     */
+    @Override
     public boolean hasEdge(int node1, int node2) {
-        System.out.println("*****hasEdge  - Start*****");
-        System.out.println("*****hasEdge  - End*****");
+        if(!nodes.containsKey(node1) || !nodes.containsKey(node2))
+        {
+            System.out.println("Not all nodes are in the graph");
+            return false;
+        }
         return (nodes.get(node1).hasNi(node2));
-    }//v
+    }
 
+    /**
+     * Adds a node to this graph.
+     * @param n
+     */
     @Override
     public void addNode(node_data n) {
-        System.out.println("*****addNode  - Start*****");
+        if(n==null) return;
         modeCounter++;
         nodes.put(n.getKey(), n);
         nodeSize++;
-        System.out.println("*****addNode  - End*****");
     }//v
 
+    /**
+     * Connects nodes with specified keys, if they exist in this graph.
+     * @param key1
+     * @param key2
+     */
     @Override
     public void connect(int key1, int key2) {
-        System.out.println("*****connect  - Start*****");
+        if(this.getNode(key1) == null || this.getNode(key2) == null)
+        {
+            System.out.println("One of those nodes are not in the graph");
+            return;
+        }
         nodes.get(key1).addNi(nodes.get(key2));
         nodes.get(key2).addNi(nodes.get(key1));
         edgeSize++;
         modeCounter++;
-        System.out.println("*****connect  - End*****");
     }//v
 
+    /**
+     *
+     * @return A collection representation of the nodes in this graph
+     */
     @Override
     public Collection<node_data> getV() {
         return nodes.values();
     }//v
 
+    /**
+     *
+     * @param key
+     * @return A collection representation of the neighbors of the specified node.
+     */
     @Override
     public Collection<node_data> getV(int key) {
+        if(key > nodes.size() || !this.nodes.containsKey(key))
+        {
+            System.out.println("No such node in the graph");
+            return null;
+        }
         return nodes.get(key).getNi();
     }//v
 
     @Override
     public node_data removeNode(int key) {
-        System.out.println("*****removeNode - start*****");
-        System.out.println("");
-        if(!nodes.containsKey(key))
-            return null;
 
-        Node[] nei = (Node[]) nodes.get(key).getNi().toArray();
-        for (int i = 0; i < nei.length; i++)
+        if(!nodes.containsKey(key))
         {
-            nei[i].removeNode(nodes.get(key));
+            System.out.println("removeNode: No such node in the graph");
+            return null;
         }
 
-
-        Node n = new Node(nodes.get(key));
-        nodes.remove(key);
-        modeCounter++;
-        System.out.println("*****removeNode - start*****");
-        return n;
+        Iterator<node_data> iterator = nodes.get(key).getNi().iterator();
+        Node n;
+        while (iterator.hasNext())
+        {
+            n = (Node) iterator.next();
+            n.removeNode(nodes.get(key));
+        }
+        return nodes.remove(key);
 
     }//v
 

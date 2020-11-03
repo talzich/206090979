@@ -28,10 +28,14 @@ public class Node implements node_data {
         nei.put(this.getKey(), this);
     }
 
-    public Node(node_data node_data) {
-        this.key = node_data.getKey();
-        this.info = node_data.getInfo();
-        this.tag = node_data.getTag();
+    /**
+     * Copy constructor
+     * @param other
+     */
+    public Node(Node other) {
+        this.key = other.key;
+        this.info = other.info;
+        this.tag = other.tag;
     }
 
     /**
@@ -39,7 +43,7 @@ public class Node implements node_data {
      * @return This node's key
      */
     public int getKey() {
-        return key;
+        return this.key;
     }
 
     /**
@@ -48,7 +52,6 @@ public class Node implements node_data {
      */
     public Collection<node_data> getNi() {
         return nei.values();
-
     }
 
     /**
