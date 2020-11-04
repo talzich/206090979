@@ -1,6 +1,5 @@
 package ex0;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,7 +24,7 @@ public class Graph_DS implements graph{
      */
     @Override
     public node_data getNode(int key) {
-        if(key > nodes.size()) return null;
+        //if(key > nodes.size()) return null;
         return nodes.get(key);
     }//v
 
@@ -40,7 +39,7 @@ public class Graph_DS implements graph{
     public boolean hasEdge(int node1, int node2) {
         if(!nodes.containsKey(node1) || !nodes.containsKey(node2))
         {
-            System.out.println("Not all nodes are in the graph");
+            System.err.println("Not all nodes are in the graph");
             return false;
         }
         return (nodes.get(node1).hasNi(node2));
@@ -67,7 +66,7 @@ public class Graph_DS implements graph{
     public void connect(int key1, int key2) {
         if(this.getNode(key1) == null || this.getNode(key2) == null)
         {
-            System.out.println("One of those nodes are not in the graph");
+            System.err.println("connect: One of those nodes are not in the graph");
             return;
         }
         nodes.get(key1).addNi(nodes.get(key2));
@@ -92,46 +91,61 @@ public class Graph_DS implements graph{
      */
     @Override
     public Collection<node_data> getV(int key) {
-        if(key > nodes.size() || !this.nodes.containsKey(key))
+        if(!this.nodes.containsKey(key))
         {
-            System.out.println("No such node in the graph");
+            System.err.println("getV(neis): No such node in the graph");
             return null;
         }
         return nodes.get(key).getNi();
     }//v
 
+    /**
+     * Removes the node with the specified key from this graph and disconnects all the
+     * edges that comes out of tit.
+     * @param key
+     * @return The removed node.
+     */
     @Override
     public node_data removeNode(int key) {
 
         if(!nodes.containsKey(key))
         {
-            System.out.println("removeNode: No such node in the graph");
+            System.err.println("removeNode: No such node in the graph");
             return null;
         }
 
         Iterator<node_data> iterator = nodes.get(key).getNi().iterator();
-        Node n;
+        Node pointer;
         while (iterator.hasNext())
         {
-            n = (Node) iterator.next();
-            n.removeNode(nodes.get(key));
+            pointer = (Node) iterator.next();
+            pointer.removeNode(nodes.get(key));
+            edgeSize--;
+            modeCounter++;
+
         }
+        modeCounter++;
         return nodes.remove(key);
 
     }//v
 
+    /**
+     * Removes the edge that connects the nodes with the specified keys.
+     * @param node1
+     * @param node2
+     */
     @Override
     public void removeEdge(int node1, int node2) {
-        System.out.println("*****removeEdge - start*****");
-        try{
+        if(!nodes.containsKey(node1) || !nodes.containsKey(node2))
+        {
+            System.err.println("removeEdge: No such node in the graph");
+            return;
+        }
             nodes.get(node1).removeNode(nodes.get(node2));
             nodes.get(node2).removeNode(nodes.get(node1));
             edgeSize--;
             modeCounter++;
-        }catch (Exception e){
-            throw new RuntimeException("Can't remove edge");
-        }
-        System.out.println("*****removeEdge - end*****");
+
     }//v
 
     @Override

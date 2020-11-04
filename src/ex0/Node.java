@@ -1,8 +1,6 @@
 package ex0;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * This class implements the node_data interface and represents a single
@@ -15,8 +13,8 @@ public class Node implements node_data {
     private static int serialNumber = 0;
     private int key =0;
     private HashMap<Integer, node_data> nei;
-    private String info;
-    private int tag;
+    private String info = "";
+    private int tag = 0;
 
 
     /**
@@ -25,53 +23,54 @@ public class Node implements node_data {
     public Node(){
         key = serialNumber++;
         nei = new HashMap<>();
-        nei.put(this.getKey(), this);
     }
 
-    /**
-     * Copy constructor
-     * @param other
-     */
-    public Node(Node other) {
-        this.key = other.key;
-        this.info = other.info;
-        this.tag = other.tag;
-    }
+//    /**
+//     * Copy constructor
+//     * @param other
+//     */
+//    public Node(Node other) {
+//        this.key = other.key;
+//        this.info = other.info;
+//        this.tag = other.tag;
+//    }
 
     /**
      * Implements node_data
      * @return This node's key
      */
+    @Override
     public int getKey() {
         return this.key;
     }
 
     /**
      * Implements node_data
-     * @return A LinkedList of all nodes adjacent to this node
+     * @return A collection representation of all nodes adjacent to this node
      */
+    @Override
     public Collection<node_data> getNi() {
         return nei.values();
     }
 
     /**
-     * implements node_data
+     * Implements node_data
      * @param key
      * @return True iff a node with a key ,identical to the given parameter, is adjacent to this node.
      */
+    @Override
     public boolean hasNi(int key) {
-        if(key > nei.size()) return false;
-        if (this.getKey() == key) return true;
+        //if(key > nei.size()) return false;
         return (nei.get(key) != null);
-        //test//test
     }
 
     /**
      * Adds node t to this node's neighbours set.
      * @param t
      */
+    @Override
     public void addNi(node_data t) {
-        if (this == t) return;
+        if (this == t || t == null) return;
         this.nei.put(t.getKey(), t);
     }
 
@@ -79,11 +78,16 @@ public class Node implements node_data {
      * Removes node from this node's neighbours set.
      * @param node
      */
+    @Override
     public void removeNode(node_data node) {
-        if(this.equals(node)) return;
+        if(this == node || node == null) return;
         nei.remove(node.getKey());
     }
 
+    /**
+     *
+     * @return The info for this graph as provided in the setInfo method.
+     */
     @Override
     public String getInfo() {
         return info;
