@@ -3,14 +3,16 @@ package ex0;
 import java.util.List;
 
 public class Graph_Algo implements graph_algorithms{
+    private graph g0;
+
     @Override
     public void init(graph g) {
-        g = new Graph_DS();
+       g0 = g;
     }
 
     @Override
     public graph copy() {
-        return null;
+        graph copy = new graph();
     }
 
     @Override
