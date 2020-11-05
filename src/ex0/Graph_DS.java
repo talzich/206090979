@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Graph_DS implements graph{
+public class Graph_DS<main> implements graph{
 
     private int modeCounter = 0;
     private HashMap<Integer,node_data> nodes;
@@ -125,6 +125,8 @@ public class Graph_DS implements graph{
 
         }
         modeCounter++;
+        nodeSize--;
+        nodes.get(key).getNi().clear();
         return nodes.remove(key);
 
     }//v
@@ -162,4 +164,45 @@ public class Graph_DS implements graph{
     public int getMC() {
         return modeCounter;
     }//v
+
+    public String toString()
+    {
+        String data = "#Nodes: " + nodeSize + "\n#Edges: " + edgeSize + "\nModes: " + modeCounter;
+        return "***Graph Data***\n" + data + "\n***End Graph Data***";
+    }
+
+    public static void main(String[] args) {
+        Node n0 = new Node();
+        Node n1 = new Node();
+        Node n2 = new Node();
+        Node n3 = new Node();
+
+        n0.setTag(1);
+        n0.setInfo("White");
+        n1.setTag(2);
+        n1.setInfo("White");
+        n2.setTag(3);
+        n2.setInfo("White");
+        n3.setTag(4);
+        n3.setInfo("black");
+
+        Graph_DS G=new Graph_DS();
+        G.addNode(n0);
+        G.addNode(n1);
+        G.addNode(n2);
+        G.addNode(n3);
+        System.out.println(G.toString());
+        G.connect(n0.getKey(), n1.getKey());
+        System.out.println(G.hasEdge(n0.getKey(), n1.getKey()));
+        System.out.println(G.hasEdge(n0.getKey(), n2.getKey()));
+        G.connect(n0.getKey(), n2.getKey());
+        System.out.println(n0.hasNi(n2.getKey()));
+        System.out.println(n2.hasNi(n0.getKey()));
+        G.connect(n1.getKey(), n3.getKey());
+        System.out.println(G.toString());
+        G.removeNode(n0.getKey());
+        System.out.println(G.toString());
+        System.out.println(n0.hasNi(n2.getKey()));
+        System.out.println(n2.hasNi(n0.getKey()));
+    }
 }

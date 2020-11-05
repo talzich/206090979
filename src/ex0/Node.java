@@ -80,8 +80,8 @@ public class Node implements node_data {
      */
     @Override
     public void removeNode(node_data node) {
-        if(this == node || node == null) return;
-        nei.remove(node.getKey());
+        if(node == null) return;
+        this.nei.remove(node.getKey());
     }
 
     /**
@@ -107,5 +107,12 @@ public class Node implements node_data {
     public void setTag(int t) {
         tag = t;
     }
+
+    public String toString(){
+        String data = "Key: " + key + "\nTag: " + tag + "\nInfo: " +info;
+        return data;
+    }
+
+
 
 }
