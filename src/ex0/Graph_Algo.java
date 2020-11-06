@@ -24,30 +24,40 @@ public class Graph_Algo implements graph_algorithms{
         //If the graph is empty or has only one node, the graph is vacuously connected
         if(g0.getV().isEmpty() || g0.nodeSize() == 1) return true;
 
+        zeroAllTags(g0);
         Iterator<node_data> vIterator = g0.getV().iterator();
-        Iterator<node_data> nIterator;
         LinkedList<Node> conComponent = new LinkedList<>();
-        Node vPointer = (Node)vIterator.next();
-        Node nPointer;
-        conComponent.add(vPointer);
-        vPointer.setTag(2);
-        while(vIterator.hasNext())
+        Queue<Node> neiQueue = new LinkedList<>();
+        Node pointer = (Node)vIterator.next();
+        neiQueue.add(pointer);
+        pointer.setTag(1);
+        while (!neiQueue.isEmpty())
         {
-            nIterator = vPointer.getNi().iterator();
-            while(nIterator.hasNext())
+            pointer = neiQueue.poll();
+            conComponent.add(pointer);
+            vIterator = pointer.getNi().iterator();
+            while (vIterator.hasNext())
             {
-                nPointer = (Node)nIterator.next();
-                nPointer.setTag(1);
-                vPointer = nPointer;
-            }
-            if(vPointer.getTag() == 1)
-            {
-                conComponent.add(vPointer);
-                vPointer.setTag(2);
+                pointer = (Node)vIterator.next();
+                if(pointer.getTag() != 1)
+                {
+                    neiQueue.add(pointer);
+                    pointer.setTag(1);
+                }
+
             }
         }
-
         return (conComponent.size() == g0.nodeSize());
+    }
+
+    private void zeroAllTags(graph g0) {
+        Iterator<node_data> iterator = g0.getV().iterator();
+        node_data pointer;
+        while (iterator.hasNext())
+        {
+            pointer = iterator.next();
+            pointer.setTag(0);
+        }
     }
 
     @Override
