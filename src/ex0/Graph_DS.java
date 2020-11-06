@@ -39,7 +39,7 @@ public class Graph_DS<main> implements graph{
     public boolean hasEdge(int node1, int node2) {
         if(!nodes.containsKey(node1) || !nodes.containsKey(node2))
         {
-            System.err.println("Not all nodes are in the graph");
+            System.err.println("hasEdge: Not all nodes are in the graph");
             return false;
         }
         return (nodes.get(node1).hasNi(node2));
@@ -67,6 +67,16 @@ public class Graph_DS<main> implements graph{
         if(this.getNode(key1) == null || this.getNode(key2) == null)
         {
             System.err.println("connect: One of those nodes are not in the graph");
+            return;
+        }
+        if(key1 == key2)
+        {
+            System.err.println("connect: Nodes are the same");
+            return;
+        }
+        if(hasEdge(key1,key2))
+        {
+            System.err.println("connect: Nodes already connected " );
             return;
         }
         nodes.get(key1).addNi(nodes.get(key2));
@@ -122,7 +132,6 @@ public class Graph_DS<main> implements graph{
             pointer.removeNode(nodes.get(key));
             edgeSize--;
             modeCounter++;
-
         }
         modeCounter++;
         nodeSize--;
