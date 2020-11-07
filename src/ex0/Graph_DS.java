@@ -18,6 +18,20 @@ public class Graph_DS<main> implements graph{
     }//v
 
     /**
+     * This copy constructor only copies MC, nodeSize and edgeSize.
+     * It is callers responsibility to copy the nodes in the graph and the edges between them.
+     * @param other
+     */
+    public Graph_DS(graph other){
+        if (other == null) return;
+        this.edgeSize = other.edgeSize();
+        this.nodeSize = other.nodeSize();
+        this.modeCounter = other.getMC();
+        this.nodes = new HashMap<>();
+    }
+
+
+    /**
      *
      * @param key - the node_id
      * @return The node with the specified key, if exists in this graph.
@@ -152,11 +166,15 @@ public class Graph_DS<main> implements graph{
             System.err.println("removeEdge: No such node in the graph");
             return;
         }
-            nodes.get(node1).removeNode(nodes.get(node2));
-            nodes.get(node2).removeNode(nodes.get(node1));
+        Node n1 = (Node)nodes.get(node1);
+        Node n2 = (Node)nodes.get(node2);
+        if(n1.hasNi(node2))
+        {
+            n1.removeNode(n2);
+            n2.removeNode(n1);
             edgeSize--;
             modeCounter++;
-
+        }
     }//v
 
     @Override
@@ -174,6 +192,9 @@ public class Graph_DS<main> implements graph{
         return modeCounter;
     }//v
 
+    public boolean hasKey(int key){
+        return this.nodes.containsKey(key);
+    }
     public String toString()
     {
         String data = "#Nodes: " + nodeSize + "\n#Edges: " + edgeSize + "\nModes: " + modeCounter;

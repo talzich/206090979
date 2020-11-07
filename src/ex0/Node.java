@@ -1,6 +1,7 @@
 package ex0;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * This class implements the node_data interface and represents a single
@@ -25,15 +26,20 @@ public class Node implements node_data {
         nei = new HashMap<>();
     }
 
-//    /**
-//     * Copy constructor
-//     * @param other
-//     */
-//    public Node(Node other) {
-//        this.key = other.key;
-//        this.info = other.info;
-//        this.tag = other.tag;
-//    }
+    /**
+     * Copy constructor - Should only be used when copying a graph.
+     * This copy constructor DOES NOT copy a nodes adj list, but it does initialize it.
+     * This copy constructor copies only key, info and tag.
+     *
+     * @param other
+     */
+    public Node(Node other) {
+        if (other == null) return;
+        this.key = other.getKey();
+        this.info = other.getInfo();
+        this.tag = other.getTag();
+        this.nei = new HashMap<>();
+    }
 
     /**
      * Implements node_data
@@ -113,6 +119,17 @@ public class Node implements node_data {
         return data;
     }
 
+    public static void main(String[] args) {
+        Node n0 = new Node();
+        Node n1 = new Node();
+        Node n2 = new Node();
+        n0.addNi(n1);
+        n0.addNi(n2);
+        n0.setTag(12);
+        n0.setInfo("test");
+        Node n3 = new Node(n0);
+        System.out.println(n3.toString());
 
+    }
 
 }

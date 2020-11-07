@@ -15,7 +15,29 @@ public class Graph_Algo implements graph_algorithms{
 
     @Override
     public graph copy() {
-        return myGraph;
+        Graph_DS copy = new Graph_DS();
+        Iterator<node_data> origIter = myGraph.getV().iterator();
+        Iterator<node_data> adjIter;
+        Node originPointer;
+        while (origIter.hasNext())
+        {
+            originPointer = (Node)origIter.next();
+            Node copyNode = new Node(originPointer);
+            if(copy.hasKey(copyNode.getKey())) continue;
+            copy.addNode(copyNode);
+            adjIter = originPointer.getNi().iterator();
+            while (adjIter.hasNext())
+            {
+                Node nei = new Node((Node) adjIter.next());
+                if(!copy.hasKey(nei.getKey()))
+                {
+                    copy.addNode(nei);
+                }
+                copy.connect(copyNode.getKey(), nei.getKey());
+            }
+        }
+
+        return copy;
     }
 
 
@@ -106,14 +128,50 @@ public class Graph_Algo implements graph_algorithms{
         //If the nodes doesn't exist in the graph there is no path.
         if(source == null || destination == null)
         {
-            System.out.println("shortestPath: The graph doesn't contain either src or dest or both");
+            System.out.println("shortestPath: The graph doesn't contain either src, dest or both");
             return null;
         }
+        int dist = shortestPathDist(src, dest);
+        if (dist == -1) return null;
+        LinkedList<node_data> path = new LinkedList<>();
+        if (dist == 0)
+        {
+            path.add(source);
+            return path;
+        }
+        node_data pointer;
+        node_data step;
+        Iterator<node_data> nIterator;
+        path.add(destination);
+        pointer = step = destination;
+        while (step != source)
+        {
+            nIterator = step.getNi().iterator();
+            while (nIterator.hasNext())
+            {
+                pointer = nIterator.next();
+                if(pointer.getTag() < step.getTag())
+                {
+                    step = pointer;
+                }
+            }
+            path.add(step);
+        }
+        path = reverseList(path);
+        return path;
+    }
 
+    private LinkedList reverseList(LinkedList list) {
+        if(list == null) return null;
+        if(list.isEmpty()) return null;
+        LinkedList reverse = new LinkedList();
+        Iterator iterator = list.descendingIterator();
+        while (iterator.hasNext())
+        {
+            reverse.add(iterator.next());
+        }
+        return reverse;
 
-
-
-        return null;
     }
 
     public static void main(String[] args) {
@@ -123,35 +181,41 @@ public class Graph_Algo implements graph_algorithms{
         Node n0 = new Node();
         Node n1 = new Node();
         Node n2 = new Node();
-        Node n3 = new Node();
-        Node n4 = new Node();
         graph.addNode(n0);
         graph.addNode(n1);
         graph.addNode(n2);
-//        graph.connect(0,1);
-//        graph.connect(1,2);
-//        System.out.println(ga.isConnected());
-//        graph.removeEdge(1,2);
-//        System.out.println(ga.isConnected());
-//        graph.connect(2,0);
-//        System.out.println(ga.isConnected());
-        graph.addNode(n3);
-        graph.addNode(n4);
         graph.connect(0,1);
-        graph.connect(0,2);
-        graph.connect(1,2);
-        graph.connect(1,3);
-        graph.connect(2,3);
-        graph.connect(2,4);
-        graph.connect(3,4);
-        System.out.println(ga.shortestPathDist(0,4));
-        graph.removeEdge(2,4);
-        System.out.println(ga.shortestPathDist(0,4));
-        graph.removeEdge(3,4);
-        System.out.println(ga.shortestPathDist(0,4));
-        System.out.println(ga.shortestPathDist(1,5));
-        graph.removeNode(0);
-        System.out.println(ga.shortestPathDist(0,1));
+        //graph.connect(1,2);
+        Graph_DS graph1 = (Graph_DS)ga.copy();
+        Graph_Algo ga1 = new Graph_Algo();
+        ga1.init(graph1);
+        System.out.println(ga.isConnected());
+        System.out.println(ga1.isConnected());
+        graph.removeEdge(1,2);
+        graph1.removeEdge(1,2);
+        System.out.println(ga.isConnected());
+        System.out.println(ga1.isConnected());
+        graph.connect(2,0);
+        System.out.println(ga.isConnected());
+        System.out.println(ga1.isConnected());
+//        graph.addNode(n3);
+//        graph.addNode(n4);
+//        graph.connect(0,1);
+//        graph.connect(0,2);
+//        graph.connect(1,2);
+//        graph.connect(1,3);
+//        graph.connect(2,3);
+//        graph.connect(2,4);
+//        graph.connect(3,4);
+//        System.out.println(ga.shortestPathDist(0,4));
+//        graph.removeEdge(2,4);
+//        System.out.println(ga.shortestPathDist(0,4));
+//        graph.removeEdge(3,4);
+//        System.out.println(ga.shortestPathDist(0,4));
+//        System.out.println(ga.shortestPathDist(1,5));
+//        graph.removeNode(0);
+//        System.out.println(ga.shortestPathDist(0,1));
+
 
     }
 }
