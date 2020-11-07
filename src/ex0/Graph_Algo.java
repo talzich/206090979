@@ -53,7 +53,7 @@ public class Graph_Algo implements graph_algorithms{
                 copy.connect(copyNode.getKey(), nei.getKey());
             }
         }
-
+        copy.copyMC(myGraph);
         return copy;
     }
 

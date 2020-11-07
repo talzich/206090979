@@ -21,6 +21,13 @@ public class Graph_DS<main> implements graph{
     }
 
     /**
+     * A method that only copies MC. Should only be used as part of the copy method in Graph_Algo.
+     * @param other
+     */
+    public void copyMC(graph other){
+        this.modeCounter = other.getMC();
+    }
+    /**
      *
      * @param key - the node_id
      * @return The node with the specified key, if exists in this graph.
