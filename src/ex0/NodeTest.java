@@ -8,22 +8,22 @@ class NodeTest {
 
     @Test
     void testKeys() {
-        Node n0 = new Node();
-        Node n1 = new Node();
-        Node n2 = new Node();
+        NodeData n0 = new NodeData();
+        NodeData n1 = new NodeData();
+        NodeData n2 = new NodeData();
         assertEquals(0, n0.getKey());
         assertEquals(1, n1.getKey());
         assertEquals(2, n2.getKey());
-        Node n3 = new Node();
+        NodeData n3 = new NodeData();
         assertEquals(3, n3.getKey());
     }
 
     @Test void testAddNi(){
-        Node n0 = new Node();
-        Node n1 = new Node();
-        Node n2 = new Node();
-        Node n3 = new Node();
-        Node n4 = new Node();
+        NodeData n0 = new NodeData();
+        NodeData n1 = new NodeData();
+        NodeData n2 = new NodeData();
+        NodeData n3 = new NodeData();
+        NodeData n4 = new NodeData();
         n0.addNi(n1);
         assertTrue(n0.hasNi(1));
         assertTrue(n0.hasNi(0));

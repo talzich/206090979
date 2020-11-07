@@ -1,7 +1,6 @@
 package ex0;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * This class implements the node_data interface and represents a single
@@ -9,7 +8,7 @@ import java.util.Iterator;
  * Each node holds a list of its adjacent nodes.
  * @author tal.zichlinsky
  */
-public class Node implements node_data {
+public class NodeData implements node_data {
 
     private static int serialNumber = 0;
     private int key =0;
@@ -21,7 +20,7 @@ public class Node implements node_data {
     /**
      * Gives new node it's unique key and initializes it's set of neighbours.
      */
-    public Node(){
+    public NodeData(){
         key = serialNumber++;
         nei = new HashMap<>();
     }
@@ -33,13 +32,13 @@ public class Node implements node_data {
      *
      * @param other
      */
-    public Node(Node other) {
+    public NodeData(NodeData other) {
         if (other == null) return;
         this.key = other.getKey();
         this.info = other.getInfo();
         this.tag = other.getTag();
         this.nei = new HashMap<>();
-    }
+   }
 
     /**
      * Implements node_data

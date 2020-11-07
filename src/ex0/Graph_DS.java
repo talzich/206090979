@@ -135,10 +135,10 @@ public class Graph_DS<main> implements graph{
         }
 
         Iterator<node_data> iterator = nodes.get(key).getNi().iterator();
-        Node pointer;
+        NodeData pointer;
         while (iterator.hasNext())
         {
-            pointer = (Node) iterator.next();
+            pointer = (NodeData) iterator.next();
             pointer.removeNode(nodes.get(key));
             edgeSize--;
             modeCounter++;
@@ -162,8 +162,8 @@ public class Graph_DS<main> implements graph{
             System.err.println("removeEdge: No such node in the graph");
             return;
         }
-        Node n1 = (Node)nodes.get(node1);
-        Node n2 = (Node)nodes.get(node2);
+        NodeData n1 = (NodeData)nodes.get(node1);
+        NodeData n2 = (NodeData)nodes.get(node2);
         if(n1.hasNi(node2))
         {
             n1.removeNode(n2);

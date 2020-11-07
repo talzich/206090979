@@ -35,17 +35,17 @@ public class Graph_Algo implements graph_algorithms{
         Graph_DS copy = new Graph_DS();
         Iterator<node_data> origIter = myGraph.getV().iterator();
         Iterator<node_data> adjIter;
-        Node originPointer;
+        NodeData originPointer;
         while (origIter.hasNext())
         {
-            originPointer = (Node)origIter.next();
-            Node copyNode = new Node(originPointer);
+            originPointer = (NodeData)origIter.next();
+            NodeData copyNode = new NodeData(originPointer);
             if(copy.hasKey(copyNode.getKey())) continue;
             copy.addNode(copyNode);
             adjIter = originPointer.getNi().iterator();
             while (adjIter.hasNext())
             {
-                Node nei = new Node((Node) adjIter.next());
+                NodeData nei = new NodeData((NodeData) adjIter.next());
                 if(!copy.hasKey(nei.getKey()))
                 {
                     copy.addNode(nei);
@@ -68,9 +68,9 @@ public class Graph_Algo implements graph_algorithms{
 
         zeroAllTags(myGraph);
         Iterator<node_data> vIterator = myGraph.getV().iterator();
-        LinkedList<Node> conComponent = new LinkedList<>();
-        Queue<Node> neiQueue = new LinkedList<>();
-        Node pointer = (Node)vIterator.next();
+        LinkedList<NodeData> conComponent = new LinkedList<>();
+        Queue<NodeData> neiQueue = new LinkedList<>();
+        NodeData pointer = (NodeData)vIterator.next();
         neiQueue.add(pointer);
         pointer.setTag(1);
         while (!neiQueue.isEmpty())
@@ -80,7 +80,7 @@ public class Graph_Algo implements graph_algorithms{
             vIterator = pointer.getNi().iterator();
             while (vIterator.hasNext())
             {
-                pointer = (Node)vIterator.next();
+                pointer = (NodeData)vIterator.next();
                 if(pointer.getTag() != 1)
                 {
                     neiQueue.add(pointer);
@@ -215,5 +215,28 @@ public class Graph_Algo implements graph_algorithms{
             pointer = iterator.next();
             pointer.setTag(0);
         }
+    }
+
+    public static void main(String[] args) {
+        Graph_Algo ga = new Graph_Algo();
+        Graph_Algo ga1  = new Graph_Algo();
+        Graph_DS gds = new Graph_DS();
+        Graph_DS gds1;
+        ga.init(gds);
+        NodeData n0 = new NodeData();
+        NodeData n1 = new NodeData();
+        NodeData n2 = new NodeData();
+        gds.addNode(n0);
+        gds.addNode(n1);
+        gds.addNode(n2);
+        gds.connect(0,1);
+
+        gds1 = (Graph_DS) ga.copy();
+        ga1.init(gds1);
+
+        System.out.println(ga1.isConnected());
+        gds1.connect(1,2);
+        System.out.println(ga1.isConnected());
+
     }
 }
