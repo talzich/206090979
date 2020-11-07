@@ -5,14 +5,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+
+/**
+ * This class implements the graph_algorithm interface.
+ * Most of the methods in this class work with a BFS algorithm in order to reach the desired nodes in a graph and
+ * preform the desired calculations.
+ * @author Tal.Zichlinsky
+ */
 public class Graph_Algo implements graph_algorithms{
     private graph myGraph;
 
+    /**
+     * Sets the graph the class will be working on to point to the graph passed as parameter.
+     * @param g
+     */
     @Override
     public void init(graph g) {
        myGraph = g;
     }
 
+    /**
+     * Method initializes a new graph that has nodes with the same keys and neighbors as this graph.
+     * This method also connects the required nodes such that the copied graph will have all the edges and connections
+     * the original graph has.
+     * @return A deep copy of this graph.
+     */
     @Override
     public graph copy() {
         Graph_DS copy = new Graph_DS();
@@ -40,7 +57,10 @@ public class Graph_Algo implements graph_algorithms{
         return copy;
     }
 
-
+    /**
+     * Method return true of false based on whether this graph is connected.
+     * @return True iff there is a path from every node to every node in this graph.
+     */
     @Override
     public boolean isConnected() {
         //If the graph is empty or has only one node, the graph is vacuously connected
@@ -73,16 +93,13 @@ public class Graph_Algo implements graph_algorithms{
         return (conComponent.size() == myGraph.nodeSize());
     }
 
-    private void zeroAllTags(graph g0) {
-        Iterator<node_data> iterator = g0.getV().iterator();
-        node_data pointer;
-        while (iterator.hasNext())
-        {
-            pointer = iterator.next();
-            pointer.setTag(0);
-        }
-    }
 
+    /**
+     * Method takes keys of two nodes, src and dest, and calculates the length (in edges) of the shortest path from src to dest.
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return An integer, representing number of edges from src to dest.
+     */
     @Override
     public int shortestPathDist(int src, int dest) {
         node_data source = myGraph.getNode(src);
@@ -121,6 +138,13 @@ public class Graph_Algo implements graph_algorithms{
         return destination.getTag();
     }
 
+    /**
+     *
+     * Method takes two keys of nodes, src and dest, and returns the shortest path from src to dest.
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return A list containing the path that is needed to go from src to dest, null if there isn't one.
+     */
     @Override
     public List<node_data> shortestPath(int src, int dest) {
         node_data source = myGraph.getNode(src);
@@ -161,6 +185,11 @@ public class Graph_Algo implements graph_algorithms{
         return path;
     }
 
+    /**
+     * This function takes a list and reverses the order of the elements.
+     * @param list
+     * @return A new list, same as the one passed as parameter, in reverse order.
+     */
     private LinkedList reverseList(LinkedList list) {
         if(list == null) return null;
         if(list.isEmpty()) return null;
@@ -174,48 +203,17 @@ public class Graph_Algo implements graph_algorithms{
 
     }
 
-    public static void main(String[] args) {
-        Graph_Algo ga = new Graph_Algo();
-        Graph_DS graph = new Graph_DS();
-        ga.init(graph);
-        Node n0 = new Node();
-        Node n1 = new Node();
-        Node n2 = new Node();
-        graph.addNode(n0);
-        graph.addNode(n1);
-        graph.addNode(n2);
-        graph.connect(0,1);
-        //graph.connect(1,2);
-        Graph_DS graph1 = (Graph_DS)ga.copy();
-        Graph_Algo ga1 = new Graph_Algo();
-        ga1.init(graph1);
-        System.out.println(ga.isConnected());
-        System.out.println(ga1.isConnected());
-        graph.removeEdge(1,2);
-        graph1.removeEdge(1,2);
-        System.out.println(ga.isConnected());
-        System.out.println(ga1.isConnected());
-        graph.connect(2,0);
-        System.out.println(ga.isConnected());
-        System.out.println(ga1.isConnected());
-//        graph.addNode(n3);
-//        graph.addNode(n4);
-//        graph.connect(0,1);
-//        graph.connect(0,2);
-//        graph.connect(1,2);
-//        graph.connect(1,3);
-//        graph.connect(2,3);
-//        graph.connect(2,4);
-//        graph.connect(3,4);
-//        System.out.println(ga.shortestPathDist(0,4));
-//        graph.removeEdge(2,4);
-//        System.out.println(ga.shortestPathDist(0,4));
-//        graph.removeEdge(3,4);
-//        System.out.println(ga.shortestPathDist(0,4));
-//        System.out.println(ga.shortestPathDist(1,5));
-//        graph.removeNode(0);
-//        System.out.println(ga.shortestPathDist(0,1));
-
-
+    /**
+     * Method goes over the nodes of graph passed as parameter and sets 0 as their tag.
+     * @param g0
+     */
+    private void zeroAllTags(graph g0) {
+        Iterator<node_data> iterator = g0.getV().iterator();
+        node_data pointer;
+        while (iterator.hasNext())
+        {
+            pointer = iterator.next();
+            pointer.setTag(0);
+        }
     }
 }

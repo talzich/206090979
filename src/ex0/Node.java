@@ -66,7 +66,6 @@ public class Node implements node_data {
      */
     @Override
     public boolean hasNi(int key) {
-        //if(key > nei.size()) return false;
         return (nei.get(key) != null);
     }
 
@@ -99,37 +98,39 @@ public class Node implements node_data {
         return info;
     }
 
+    /**
+     * Sets this info to be s
+     * @param s
+     */
     @Override
     public void setInfo(String s) {
         info = s;
     }
 
+    /**
+     *
+     * @return The tag of this node
+     */
     @Override
     public int getTag() {
         return tag;
     }
 
+    /**
+     * Sets this node's tag to be t
+     * @param t - the new value of the tag
+     */
     @Override
     public void setTag(int t) {
         tag = t;
     }
 
+    /**
+     * A simple toString method.
+     * @return
+     */
     public String toString(){
         String data = "Key: " + key + "\nTag: " + tag + "\nInfo: " +info;
         return data;
     }
-
-    public static void main(String[] args) {
-        Node n0 = new Node();
-        Node n1 = new Node();
-        Node n2 = new Node();
-        n0.addNi(n1);
-        n0.addNi(n2);
-        n0.setTag(12);
-        n0.setInfo("test");
-        Node n3 = new Node(n0);
-        System.out.println(n3.toString());
-
-    }
-
 }

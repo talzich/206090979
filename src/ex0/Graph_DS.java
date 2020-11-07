@@ -12,24 +12,13 @@ public class Graph_DS<main> implements graph{
     private int edgeSize = 0;
 
 
+    /**
+     * A simple constructor.
+     */
     public Graph_DS(){
         nodes = new HashMap<>();
         modeCounter++;
-    }//v
-
-    /**
-     * This copy constructor only copies MC, nodeSize and edgeSize.
-     * It is callers responsibility to copy the nodes in the graph and the edges between them.
-     * @param other
-     */
-    public Graph_DS(graph other){
-        if (other == null) return;
-        this.edgeSize = other.edgeSize();
-        this.nodeSize = other.nodeSize();
-        this.modeCounter = other.getMC();
-        this.nodes = new HashMap<>();
     }
-
 
     /**
      *
@@ -40,7 +29,7 @@ public class Graph_DS<main> implements graph{
     public node_data getNode(int key) {
         //if(key > nodes.size()) return null;
         return nodes.get(key);
-    }//v
+    }
 
     /**
      *
@@ -60,7 +49,7 @@ public class Graph_DS<main> implements graph{
     }
 
     /**
-     * Adds a node to this graph.
+     * Adds noded passed as parameter to this graph.
      * @param n
      */
     @Override
@@ -69,7 +58,7 @@ public class Graph_DS<main> implements graph{
         modeCounter++;
         nodes.put(n.getKey(), n);
         nodeSize++;
-    }//v
+    }
 
     /**
      * Connects nodes with specified keys, if they exist in this graph.
@@ -97,7 +86,7 @@ public class Graph_DS<main> implements graph{
         nodes.get(key2).addNi(nodes.get(key1));
         edgeSize++;
         modeCounter++;
-    }//v
+    }
 
     /**
      *
@@ -106,12 +95,12 @@ public class Graph_DS<main> implements graph{
     @Override
     public Collection<node_data> getV() {
         return nodes.values();
-    }//v
+    }
 
     /**
      *
      * @param key
-     * @return A collection representation of the neighbors of the specified node.
+     * @return A collection representation of the neighbors of the node with the specified key.
      */
     @Override
     public Collection<node_data> getV(int key) {
@@ -121,7 +110,7 @@ public class Graph_DS<main> implements graph{
             return null;
         }
         return nodes.get(key).getNi();
-    }//v
+    }
 
     /**
      * Removes the node with the specified key from this graph and disconnects all the
@@ -152,7 +141,7 @@ public class Graph_DS<main> implements graph{
         nodes.get(key).getNi().clear();
         return nodes.remove(key);
 
-    }//v
+    }
 
     /**
      * Removes the edge that connects the nodes with the specified keys.
@@ -175,64 +164,52 @@ public class Graph_DS<main> implements graph{
             edgeSize--;
             modeCounter++;
         }
-    }//v
+    }
 
+    /**
+     *
+     * @return Amount of nodes in this graph
+     */
     @Override
     public int nodeSize() {
         return nodeSize;
-    }//v
+    }
 
+    /**
+     * Amount of edges in this graph
+     * @return
+     */
     @Override
     public int edgeSize() {
         return edgeSize;
-    }//v
+    }
 
+    /**
+     *
+     * @return Amount of changes made to this graph. Counting: adding nodes, adding edges, removing nodes, removing edges, creating the graph.
+     */
     @Override
     public int getMC() {
         return modeCounter;
-    }//v
+    }
 
+    /**
+     * Checks whether this graph contains a node with specified key
+     * @param key
+     * @return True iff this graph contains node with a key such as passed as parameter.
+     */
     public boolean hasKey(int key){
         return this.nodes.containsKey(key);
     }
+
+    /**
+     * A simple toString method.
+     * @return
+     */
     public String toString()
     {
         String data = "#Nodes: " + nodeSize + "\n#Edges: " + edgeSize + "\nModes: " + modeCounter;
         return "***Graph Data***\n" + data + "\n***End Graph Data***";
     }
-//
-//    public static void main(String[] args) {
-//        Node n0 = new Node();
-//        Node n1 = new Node();
-//        Node n2 = new Node();
-//        Node n3 = new Node();
-//
-//        n0.setTag(1);
-//        n0.setInfo("White");
-//        n1.setTag(2);
-//        n1.setInfo("White");
-//        n2.setTag(3);
-//        n2.setInfo("White");
-//        n3.setTag(4);
-//        n3.setInfo("black");
-//
-//        Graph_DS G=new Graph_DS();
-//        G.addNode(n0);
-//        G.addNode(n1);
-//        G.addNode(n2);
-//        G.addNode(n3);
-//        System.out.println(G.toString());
-//        G.connect(n0.getKey(), n1.getKey());
-//        System.out.println(G.hasEdge(n0.getKey(), n1.getKey()));
-//        System.out.println(G.hasEdge(n0.getKey(), n2.getKey()));
-//        G.connect(n0.getKey(), n2.getKey());
-//        System.out.println(n0.hasNi(n2.getKey()));
-//        System.out.println(n2.hasNi(n0.getKey()));
-//        G.connect(n1.getKey(), n3.getKey());
-//        System.out.println(G.toString());
-//        G.removeNode(n0.getKey());
-//        System.out.println(G.toString());
-//        System.out.println(n0.hasNi(n2.getKey()));
-//        System.out.println(n2.hasNi(n0.getKey()));
-//    }
+
 }
