@@ -217,26 +217,5 @@ public class Graph_Algo implements graph_algorithms{
         }
     }
 
-    public static void main(String[] args) {
-        Graph_Algo ga = new Graph_Algo();
-        Graph_Algo ga1  = new Graph_Algo();
-        Graph_DS gds = new Graph_DS();
-        Graph_DS gds1;
-        ga.init(gds);
-        NodeData n0 = new NodeData();
-        NodeData n1 = new NodeData();
-        NodeData n2 = new NodeData();
-        gds.addNode(n0);
-        gds.addNode(n1);
-        gds.addNode(n2);
-        gds.connect(0,1);
 
-        gds1 = (Graph_DS) ga.copy();
-        ga1.init(gds1);
-
-        System.out.println(ga1.isConnected());
-        gds1.connect(1,2);
-        System.out.println(ga1.isConnected());
-
-    }
 }
