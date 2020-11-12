@@ -76,17 +76,14 @@ public class Graph_DS<main> implements graph{
     public void connect(int key1, int key2) {
         if(this.getNode(key1) == null || this.getNode(key2) == null)
         {
-            System.err.println("connect: One of those nodes are not in the graph");
             return;
         }
         if(key1 == key2)
         {
-            System.err.println("connect: Nodes are the same");
             return;
         }
         if(hasEdge(key1,key2))
         {
-            System.err.println("connect: Nodes already connected " );
             return;
         }
         nodes.get(key1).addNi(nodes.get(key2));
@@ -113,7 +110,6 @@ public class Graph_DS<main> implements graph{
     public Collection<node_data> getV(int key) {
         if(!this.nodes.containsKey(key))
         {
-            System.err.println("getV(neis): No such node in the graph");
             return null;
         }
         return nodes.get(key).getNi();
@@ -130,7 +126,6 @@ public class Graph_DS<main> implements graph{
 
         if(!nodes.containsKey(key))
         {
-            System.err.println("removeNode: No such node in the graph");
             return null;
         }
 
@@ -159,7 +154,6 @@ public class Graph_DS<main> implements graph{
     public void removeEdge(int node1, int node2) {
         if(!nodes.containsKey(node1) || !nodes.containsKey(node2))
         {
-            System.err.println("removeEdge: No such node in the graph");
             return;
         }
         NodeData n1 = (NodeData)nodes.get(node1);

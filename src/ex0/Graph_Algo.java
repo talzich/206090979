@@ -107,7 +107,6 @@ public class Graph_Algo implements graph_algorithms{
         //If the nodes doesn't exist in the graph there is no path.
         if(source == null || destination == null)
         {
-            System.err.println("shortestPathDist: The graph doesn't contain either src, dest or both");
             return -1;
         }
         zeroAllTags(myGraph);
@@ -132,7 +131,6 @@ public class Graph_Algo implements graph_algorithms{
 
         if(destination.getTag() == 0)
         {
-            System.err.println("shortestPathDist: src and dest are not connected in this graph.");
             return -1;
         }
         return destination.getTag();
