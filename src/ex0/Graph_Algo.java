@@ -150,7 +150,6 @@ public class Graph_Algo implements graph_algorithms{
         //If the nodes doesn't exist in the graph there is no path.
         if(source == null || destination == null)
         {
-            System.out.println("shortestPath: The graph doesn't contain either src, dest or both");
             return null;
         }
         int dist = shortestPathDist(src, dest);
