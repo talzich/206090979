@@ -32,10 +32,10 @@ public class Graph_Algo implements graph_algorithms{
      */
     @Override
     public graph copy() {
-        Graph_DS copy = new Graph_DS();
-        Iterator<node_data> origIter = myGraph.getV().iterator();
-        Iterator<node_data> adjIter;
-        NodeData originPointer;
+        Graph_DS copy = new Graph_DS(); //The graph we will be returning
+        Iterator<node_data> origIter = myGraph.getV().iterator();// This iterator will iterate through the original graph 
+        Iterator<node_data> adjIter;//When origIter will point at a specific node, this Iterator will iterate through the node's neighbors  
+        NodeData originPointer;// Will be used to point at the nodes of the original graph 
         while (origIter.hasNext())
         {
             originPointer = (NodeData)origIter.next();
@@ -53,7 +53,7 @@ public class Graph_Algo implements graph_algorithms{
                 copy.connect(copyNode.getKey(), nei.getKey());
             }
         }
-        copy.copyMC(myGraph);
+        copy.copyMC(myGraph);//Because this graph is copied, its MC would be the amount of modes it has gone through while copying, we need to set it to be the same as the original. 
         return copy;
     }
 
@@ -66,18 +66,18 @@ public class Graph_Algo implements graph_algorithms{
         //If the graph is empty or has only one node, the graph is vacuously connected
         if(myGraph.getV().isEmpty() || myGraph.nodeSize() == 1) return true;
 
-        zeroAllTags(myGraph);
-        Iterator<node_data> vIterator = myGraph.getV().iterator();
-        LinkedList<NodeData> conComponent = new LinkedList<>();
-        Queue<NodeData> neiQueue = new LinkedList<>();
+        zeroAllTags(myGraph);// Sets the tags of all nodes to 0.
+        Iterator<node_data> vIterator = myGraph.getV().iterator();// This iterator will iterate through the graph's nodes.
+        LinkedList<NodeData> conComponent = new LinkedList<>();// We will be listing all the nodes in the first connected component we will come across
+        Queue<NodeData> neiQueue = new LinkedList<>();// This queue will let us know what node needs to be explored (in terms of its neighbors)
         NodeData pointer = (NodeData)vIterator.next();
         neiQueue.add(pointer);
-        pointer.setTag(1);
+        pointer.setTag(1);//We set the tag of every node that goes through the queue to 1, in order to keep track of the exploration.
         while (!neiQueue.isEmpty())
         {
             pointer = neiQueue.poll();
             conComponent.add(pointer);
-            vIterator = pointer.getNi().iterator();
+            vIterator = pointer.getNi().iterator();//This will iterate through every node's neighbors
             while (vIterator.hasNext())
             {
                 pointer = (NodeData)vIterator.next();
@@ -102,17 +102,25 @@ public class Graph_Algo implements graph_algorithms{
      */
     @Override
     public int shortestPathDist(int src, int dest) {
-        node_data source = myGraph.getNode(src);
-        node_data destination = myGraph.getNode(dest);
+        node_data source = myGraph.getNode(src); // A pointer to the source node.
+        node_data destination = myGraph.getNode(dest); // A pointer to the destination node. 
+        
         //If the nodes doesn't exist in the graph there is no path.
         if(source == null || destination == null)
         {
             return -1;
         }
-        zeroAllTags(myGraph);
-        Queue<node_data> queue = new LinkedList<>();
+        
+        zeroAllTags(myGraph);// Sets the tags of all the nodes to 0
+        Queue<node_data> queue = new LinkedList<>();// Will keep track of which node to explore next
         Iterator<node_data> iterator;
         queue.add(source);
+        
+        /*
+           We will be iterating through the graph, starting at the source node that has 0 as its tag. We will set each node's tag to its 
+           distance from source (in edges). The way to do it is to set source to 0 and then exploring the graph only through its neighbors, and then their 
+           neighbors and so on, while iterating we will set each node's tag to be one more than the node that sent us to it.  
+         */
         while (!queue.isEmpty())
         {
             node_data pointer = queue.poll();
@@ -147,22 +155,34 @@ public class Graph_Algo implements graph_algorithms{
     public List<node_data> shortestPath(int src, int dest) {
         node_data source = myGraph.getNode(src);
         node_data destination = myGraph.getNode(dest);
+        LinkedList<node_data> path = new LinkedList<>();
+        
         //If the nodes doesn't exist in the graph there is no path.
         if(source == null || destination == null)
         {
             return null;
         }
-        int dist = shortestPathDist(src, dest);
+        int dist = shortestPathDist(src, dest); // The number of edges it takes to get from src to dest
+        
+        //If the nodes are not connected we will return null
         if (dist == -1) return null;
-        LinkedList<node_data> path = new LinkedList<>();
+        
+        //If the distance between src and dest is 0, src and dest are the same node. 
         if (dist == 0)
         {
             path.add(source);
             return path;
         }
-        node_data pointer;
-        node_data step;
+        node_data pointer;//Where we are now
+        node_data step; // Where to go next
         Iterator<node_data> nIterator;
+        
+        /*
+        The way we will return the shortest path is to use the shortestPathDist method in order to set each node's tag to be its distance from src. 
+        We will start our path at dest and will iterate through its neighbors to find the one with the smallest tag i.e. the one that marks the 
+        shortest way to src and add it to our list. Eventually, we will get a list that contains the shortest path from dest to src. We will reverse
+        that list and return it. 
+        */
         path.add(destination);
         pointer = step = destination;
         while (step != source)
